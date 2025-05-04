@@ -1,0 +1,612 @@
+app:
+  description: ''
+  icon: mage
+  icon_background: '#E4FBCC'
+  mode: workflow
+  name: 儿童故事播客
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: stvlynn/doc:0.0.1@f02f0f26cb1c81eb1309d79277678688af037554d5c90e06982db17763d7b43f
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai_api_compatible:0.0.11@410445eba2fa0f693d26dea2c3b9ffe51ad0777e021146ff877af6098412efc7
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: bowenliang123/md_exporter:0.5.1@a577f215826426f34b5c4ed9c7b90695298470c885d1a925ea2af584374bf002
+kind: app
+version: 0.2.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1732605362358-source-1732605368639-target
+      selected: false
+      source: '1732605362358'
+      sourceHandle: source
+      target: '1732605368639'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1732605368639-source-1733370461963-target
+      selected: false
+      source: '1732605368639'
+      sourceHandle: source
+      target: '1733370461963'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1733370461963-source-1746024591926-target
+      source: '1733370461963'
+      sourceHandle: source
+      target: '1746024591926'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1746024591926-source-1746024725021-target
+      source: '1746024591926'
+      sourceHandle: source
+      target: '1746024725021'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: tool
+      id: 1746024725021-source-1746031841949-target
+      source: '1746024725021'
+      sourceHandle: source
+      target: '1746031841949'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: end
+      id: 1732605537253-source-1746025115059-target
+      source: '1732605537253'
+      sourceHandle: source
+      target: '1746025115059'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: end
+      id: 1746031368189-source-1746025115059-target
+      source: '1746031368189'
+      sourceHandle: source
+      target: '1746025115059'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: end
+      id: 1746031841949-source-1746025115059-target
+      source: '1746031841949'
+      sourceHandle: source
+      target: '1746025115059'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: tool
+      id: 1732605368639-source-1732605537253-target
+      source: '1732605368639'
+      sourceHandle: source
+      target: '1732605537253'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: tool
+      id: 1732605368639-source-1746031368189-target
+      source: '1732605368639'
+      sourceHandle: source
+      target: '1746031368189'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: input
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: input
+      height: 90
+      id: '1732605362358'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1732605362358'
+          - input
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: /root/Qwen2.5-72B-Instruct-AWQ/
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: 7bc28cb4-12de-49f3-9d2a-b0d4fc415252
+          role: system
+          text: '### 角色清晰
+
+
+            作为儿童文学作家，您擅长创作富有教育意义和想象力的儿童故事，尤其善于将科学、安全教育、唐诗宋词、历史等元素融入到故事内容中。您的任务是根据{{#context#}}扩充创意儿童故事，向孩子们传递科学、安全教育、唐诗宋词、历史等知识和人生哲理。
+
+
+            ### 结构化交互
+
+
+            请按照以下步骤进行：
+
+
+            1.  **故事背景**：根据用户提供的内容{{#1732605362358.input#}}，创作一个现代孩子的日常生活场景，并巧妙地引入一个儿童故事角色或元素。
+
+            2.  **情节构建**：设计故事情节，故事情节内容可以与科学、安全教育、唐诗宋词、历史等元素融入。
+
+            3.  **教育意义与启示**：通过故事结尾，揭示故事的教育意义和人生哲理，与主题相呼应。
+
+            4.  **中文输出**：最终全中文输出故事内容。'
+        - id: 67465dba-cd9b-4c0c-b867-26ade80ac180
+          role: user
+          text: '{{#1732605362358.input#}}'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1732605368639'
+      position:
+        x: 378.32089721811883
+        y: 282
+      positionAbsolute:
+        x: 378.32089721811883
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: audio
+        provider_name: audio
+        provider_type: builtin
+        selected: false
+        title: Text To Speech
+        tool_configurations:
+          model: langgenius/siliconflow/siliconflow#FunAudioLLM/CosyVoice2-0.5B
+          voice#langgenius/siliconflow/siliconflow#FunAudioLLM/CosyVoice2-0.5B: FunAudioLLM/CosyVoice2-0.5B:claire
+          voice#langgenius/siliconflow/siliconflow#RVC-Boss/GPT-SoVITS: RVC-Boss/GPT-SoVITS:david
+          voice#langgenius/siliconflow/siliconflow#fishaudio/fish-speech-1.4: fishaudio/fish-speech-1.4:anna
+          voice#langgenius/siliconflow/siliconflow#fishaudio/fish-speech-1.5: fishaudio/fish-speech-1.5:anna
+          voice#tongyi#tts-1: sambert-zhijia-v1
+        tool_label: Text To Speech
+        tool_name: tts
+        tool_parameters:
+          text:
+            type: mixed
+            value: '{{#1732605368639.text#}}'
+        type: tool
+      height: 220
+      id: '1732605537253'
+      position:
+        x: 1404.411319886659
+        y: 193.62158407693903
+      positionAbsolute:
+        x: 1404.411319886659
+        y: 193.62158407693903
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: 周辉
+        desc: ''
+        height: 263
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"输入用户提问的信息，比如“请为我编写一个关于‘勇气与成长’的儿童故事，我希望故事中的小主人公能面对自己的恐惧，并在过程中获得成长，内容字数不少500","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 308
+      height: 263
+      id: '1732611353713'
+      position:
+        x: -3832.37674370225
+        y: 544.3635304009266
+      positionAbsolute:
+        x: -3832.37674370225
+        y: 544.3635304009266
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 308
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1732605368639'
+          - text
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: /root/Qwen2.5-72B-Instruct-AWQ/
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: 3441518e-ef31-450c-9491-06d6203f2348
+          role: system
+          text: 你是一位经验丰富的AI绘画图像生成助手。你的任务是根据{{#context#}}内容提炼出一条应用于AI绘画模型的prompt，prompt要包含儿童插画，这条prompt的目的是生成生成一幅故事内容相关的封面。
+        selected: false
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1733370461963'
+      position:
+        x: 759.8117061354483
+        y: 605.9963900089991
+      positionAbsolute:
+        x: 759.8117061354483
+        y: 605.9963900089991
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1733370461963'
+          - text
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: /root/Qwen2.5-72B-Instruct-AWQ/
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: d9338263-cbdb-4943-a0e1-575b353ccb01
+          role: system
+          text: 你是一个图像生成助手，请将{{#context#}}，翻译成英文，并插入到以下链接的{prompt}部分： ![image](https://image.pollinations.ai/prompt/{prompt}?width=1024&height=1024&enhance=true&private=true
+            然后输出生成内容
+        selected: false
+        title: LLM 3
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1746024591926'
+      position:
+        x: 1063.8117061354483
+        y: 605.9963900089991
+      positionAbsolute:
+        x: 1063.8117061354483
+        y: 605.9963900089991
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import re\n\ndef main(arg1: str) -> dict:\n    pattern = r'!\\[image\\\
+          ].*?enhance=true&private=true\\)'\n    match = re.search(pattern, arg1,\
+          \ re.DOTALL)\n\n    result = match.group()\n\n    return {\n        \"result\"\
+          : result,\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: true
+        title: 代码执行 2
+        type: code
+        variables:
+        - value_selector:
+          - '1746024591926'
+          - text
+          variable: arg1
+      height: 54
+      id: '1746024725021'
+      position:
+        x: 1370.479330487371
+        y: 605.9963900089991
+      positionAbsolute:
+        x: 1370.479330487371
+        y: 605.9963900089991
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1732605368639'
+          - text
+          variable: llm1
+        - value_selector:
+          - '1732605537253'
+          - files
+          variable: speek
+        - value_selector:
+          - '1746031368189'
+          - files
+          variable: docx
+        - value_selector:
+          - '1746031841949'
+          - files
+          variable: pic
+        selected: false
+        title: 结束 2
+        type: end
+      height: 168
+      id: '1746025115059'
+      position:
+        x: 2186.537317077942
+        y: 379.6056773592578
+      positionAbsolute:
+        x: 2186.537317077942
+        y: 379.6056773592578
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The Markdown content to be converted to Word document
+            ja_JP: Word ドキュメントに変換する Markdown コンテンツ
+            pt_BR: O conteúdo Markdown a ser convertido para documento Word
+            zh_Hans: 要转换为Word文档的Markdown内容
+          label:
+            en_US: Markdown Content
+            ja_JP: Markdown コンテンツ
+            pt_BR: Conteúdo Markdown
+            zh_Hans: Markdown内容
+          llm_description: The Markdown content that will be converted to a Word document
+          max: null
+          min: null
+          name: markdown_content
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The title of the Word document
+            ja_JP: Word ドキュメントのタイトル
+            pt_BR: O título do documento Word
+            zh_Hans: Word文档的标题
+          label:
+            en_US: Document Title
+            ja_JP: ドキュメントタイトル
+            pt_BR: Título do Documento
+            zh_Hans: 文档标题
+          llm_description: The title that will be displayed at the top of the Word
+            document
+          max: null
+          min: null
+          name: title
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          markdown_content: ''
+          title: ''
+        provider_id: stvlynn/doc/doc
+        provider_name: stvlynn/doc/doc
+        provider_type: builtin
+        selected: false
+        title: Markdown转DOCX转换器
+        tool_configurations: {}
+        tool_description: 将Markdown内容转换为DOCX（Word）文档
+        tool_label: Markdown转DOCX转换器
+        tool_name: markdown_to_docx_converter
+        tool_parameters:
+          markdown_content:
+            type: mixed
+            value: '{{#1732605368639.text#}}'
+          title:
+            type: mixed
+            value: '{{#1732605362358.input#}}'
+        type: tool
+      height: 54
+      id: '1746031368189'
+      position:
+        x: 1411.5854038384507
+        y: 466.65827707526296
+      positionAbsolute:
+        x: 1411.5854038384507
+        y: 466.65827707526296
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Markdown text
+            ja_JP: Markdown text
+            pt_BR: Markdown text
+            zh_Hans: Markdown格式文本
+          label:
+            en_US: Markdown text
+            ja_JP: Markdown text
+            pt_BR: Markdown text
+            zh_Hans: Markdown格式文本
+          llm_description: ''
+          max: null
+          min: null
+          name: md_text
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        params:
+          md_text: ''
+        provider_id: bowenliang123/md_exporter/md_exporter
+        provider_name: bowenliang123/md_exporter/md_exporter
+        provider_type: builtin
+        selected: false
+        title: 提取图片链接为文件
+        tool_configurations: {}
+        tool_description: 一个用于将Markdown中代码块转换为文件的工具
+        tool_label: 提取图片链接为文件
+        tool_name: md_to_linked_image
+        tool_parameters:
+          md_text:
+            type: mixed
+            value: '{{#1746024725021.result#}}'
+        type: tool
+      height: 54
+      id: '1746031841949'
+      position:
+        x: 1757.608384290562
+        y: 605.9963900089991
+      positionAbsolute:
+        x: 1757.608384290562
+        y: 605.9963900089991
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -143.39070443478477
+      y: 57.21028443338426
+      zoom: 0.37486537385939384

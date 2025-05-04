@@ -1,0 +1,412 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 硅基文生图
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai_api_compatible:0.0.11@410445eba2fa0f693d26dea2c3b9ffe51ad0777e021146ff877af6098412efc7
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/siliconflow_tool:0.0.5@997a1c442488f81930d401a4a7292d23415ec0dcf7a3bca14e13d845ecfdd2b0
+kind: app
+version: 0.2.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: tool
+        targetType: end
+      id: 1746015185966-source-1746015438046-target
+      source: '1746015185966'
+      sourceHandle: source
+      target: '1746015438046'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1746014517541-source-1746015582147-target
+      source: '1746014517541'
+      sourceHandle: source
+      target: '1746015582147'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: tool
+      id: 1746015582147-source-1746015185966-target
+      source: '1746015582147'
+      sourceHandle: source
+      target: '1746015185966'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: userText
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: userText
+      height: 90
+      id: '1746014517541'
+      position:
+        x: 49.20138523630237
+        y: 282
+      positionAbsolute:
+        x: 49.20138523630237
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: false
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The text prompt used to generate the image.
+            ja_JP: The text prompt used to generate the image.
+            pt_BR: The text prompt used to generate the image.
+            zh_Hans: 建议用英文的生成图片提示词以获得更好的生成效果。
+          label:
+            en_US: prompt
+            ja_JP: prompt
+            pt_BR: prompt
+            zh_Hans: 提示词
+          llm_description: this prompt text will be used to generate image.
+          max: null
+          min: null
+          name: prompt
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: schnell
+          form: form
+          human_description:
+            en_US: Choose the model version for image generation
+            ja_JP: Choose the model version for image generation
+            pt_BR: Choose the model version for image generation
+            zh_Hans: 选择用于图像生成的模型版本
+          label:
+            en_US: Choose Image Model
+            ja_JP: Choose Image Model
+            pt_BR: Choose Image Model
+            zh_Hans: 选择生成图片的模型
+          llm_description: ''
+          max: null
+          min: null
+          name: model
+          options:
+          - label:
+              en_US: Flux.1-schnell
+              ja_JP: Flux.1-schnell
+              pt_BR: Flux.1-schnell
+              zh_Hans: Flux.1-schnell
+            value: schnell
+          - label:
+              en_US: Flux.1-dev
+              ja_JP: Flux.1-dev
+              pt_BR: Flux.1-dev
+              zh_Hans: Flux.1-dev
+            value: dev
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: 1024x1024
+          form: form
+          human_description:
+            en_US: Select the dimensions of the generated image
+            ja_JP: Select the dimensions of the generated image
+            pt_BR: Select the dimensions of the generated image
+            zh_Hans: 选择生成图片的尺寸
+          label:
+            en_US: Choose Image Size
+            ja_JP: Choose Image Size
+            pt_BR: Choose Image Size
+            zh_Hans: 选择生成的图片大小
+          llm_description: ''
+          max: null
+          min: null
+          name: image_size
+          options:
+          - label:
+              en_US: 1024x1024
+              ja_JP: 1024x1024
+              pt_BR: 1024x1024
+              zh_Hans: 1024x1024
+            value: 1024x1024
+          - label:
+              en_US: 768x1024
+              ja_JP: 768x1024
+              pt_BR: 768x1024
+              zh_Hans: 768x1024
+            value: 768x1024
+          - label:
+              en_US: 576x1024
+              ja_JP: 576x1024
+              pt_BR: 576x1024
+              zh_Hans: 576x1024
+            value: 576x1024
+          - label:
+              en_US: 512x1024
+              ja_JP: 512x1024
+              pt_BR: 512x1024
+              zh_Hans: 512x1024
+            value: 512x1024
+          - label:
+              en_US: 1024x576
+              ja_JP: 1024x576
+              pt_BR: 1024x576
+              zh_Hans: 1024x576
+            value: 1024x576
+          - label:
+              en_US: 768x512
+              ja_JP: 768x512
+              pt_BR: 768x512
+              zh_Hans: 768x512
+            value: 768x512
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: 20
+          form: form
+          human_description:
+            en_US: The number of inference steps to perform. More steps produce higher
+              quality but take longer.
+            ja_JP: The number of inference steps to perform. More steps produce higher
+              quality but take longer.
+            pt_BR: The number of inference steps to perform. More steps produce higher
+              quality but take longer.
+            zh_Hans: 执行的推理步骤数量。更多的步骤可以产生更高质量的结果，但需要更长的时间。
+          label:
+            en_US: Num Inference Steps
+            ja_JP: Num Inference Steps
+            pt_BR: Num Inference Steps
+            zh_Hans: 生成图片的步数
+          llm_description: ''
+          max: 100
+          min: 1
+          name: num_inference_steps
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: The same seed and prompt can produce similar images.
+            ja_JP: The same seed and prompt can produce similar images.
+            pt_BR: The same seed and prompt can produce similar images.
+            zh_Hans: 相同的种子和提示可以产生相似的图像。
+          label:
+            en_US: Seed
+            ja_JP: Seed
+            pt_BR: Seed
+            zh_Hans: 种子
+          llm_description: ''
+          max: 9999999999
+          min: 0
+          name: seed
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        params:
+          image_size: ''
+          model: ''
+          num_inference_steps: ''
+          prompt: ''
+          seed: ''
+        provider_id: langgenius/siliconflow_tool/siliconflow
+        provider_name: langgenius/siliconflow_tool/siliconflow
+        provider_type: builtin
+        selected: false
+        title: Flux
+        tool_configurations:
+          image_size: 1024x1024
+          model: dev
+          num_inference_steps: 19
+          seed: 5
+        tool_description: Generate image via SiliconFlow's flux model.
+        tool_label: Flux
+        tool_name: flux
+        tool_parameters:
+          prompt:
+            type: mixed
+            value: '{{#1746014517541.userText#}}'
+        type: tool
+      height: 168
+      id: '1746015185966'
+      position:
+        x: 619
+        y: 282
+      positionAbsolute:
+        x: 619
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1746015185966'
+          - files
+          variable: files
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1746015438046'
+      position:
+        x: 903
+        y: 282
+      positionAbsolute:
+        x: 903
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1746014517541'
+          - userText
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: /root/Qwen2.5-72B-Instruct-AWQ/
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: f94366d5-e8cf-4135-927a-35572cabee3b
+          role: system
+          text: "**核心功能**​：你是一个翻译官，你需要把用户输入中文描述转化为符合SDXL规范的英文提示词.注意输出为纯英文，不要有任何汉字。\n\
+            \n​**转换规则**​：\n1. ​**四维结构**​：\n   - [主体]：核心对象（如\"赛博朋克女战士\"）\n   - [细节]：特征强化（如\"\
+            霓虹纹身+机械义肢+金属反光\"）  \n   - [风格]：艺术类型（如\"吉卜力动画风+水墨渲染\"）\n   - [参数]：质量参数（如\"\
+            8K分辨率+物理渲染引擎\"）\n\n2. ​**构图指导**​：\n   - 镜头类型：广角镜头/微距拍摄/俯视视角  \n   - 灯光效果：电影级布光/霓虹背光/丁达尔效应\n\
+            \   - 景深控制：浅景深突出主体/全景深场景构建\n\n3. ​**优化规范**​：\n   - 强制使用：超精细纹理｜复杂光影层次｜专业摄影术语\n\
+            \   - 禁用词汇：避免\"漂亮\"等主观描述，改用\"鲜艳色彩饱和度>90%\"等量化表达\n\n​**范例演示**​：\n输入：水墨风格的竹林少女，雨中持油纸伞，发丝要有湿润感\n\
+            输出：[Bamboo Forest Maiden], [Wet Hair Strands + Celadon-patterned Oil-paper\
+            \ Umbrella + Trickling Raindrops], [Ink Wash Rendering + Modern Lighting\
+            \ Treatment], [8K UHD + Octane Rendering], [Wide-angle Lens + Shallow\
+            \ Depth of Field]"
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1746015582147'
+      position:
+        x: 331.65423553677124
+        y: 282
+      positionAbsolute:
+        x: 331.65423553677124
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -24.247804271108294
+      y: -30.73954341136823
+      zoom: 0.6597539553864471
