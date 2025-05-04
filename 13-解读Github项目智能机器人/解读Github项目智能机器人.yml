@@ -1,0 +1,303 @@
+app:
+  description: 解读Github项目智能机器人
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 解读Github项目智能机器人
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai_api_compatible:0.0.11@410445eba2fa0f693d26dea2c3b9ffe51ad0777e021146ff877af6098412efc7
+kind: app
+version: 0.2.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: llm
+      id: 1726478412443-source-1726478514343-target
+      source: '1726478412443'
+      sourceHandle: source
+      target: '1726478514343'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 1726478514343-source-1726478601010-target
+      source: '1726478514343'
+      sourceHandle: source
+      target: '1726478601010'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: http-request
+      id: 1726477902803-source-1726478004324-target
+      source: '1726477902803'
+      sourceHandle: source
+      target: '1726478004324'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: http-request
+      id: 1726478004324-source-1726478412443-target
+      source: '1726478004324'
+      sourceHandle: source
+      target: '1726478412443'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: url
+          max_length: 200
+          options: []
+          required: true
+          type: text-input
+          variable: url
+      height: 90
+      id: '1726477902803'
+      position:
+        x: 82.98356669687735
+        y: 279
+      positionAbsolute:
+        x: 82.98356669687735
+        y: 279
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - type: text
+            value: ''
+          type: none
+        desc: ''
+        headers: ''
+        method: get
+        params: url:{{#1726477902803.url#}}
+        retry_config:
+          max_retries: 3
+          retry_enabled: false
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 获取README
+        type: http-request
+        url: http://XXXX:11163/get_readme
+        variables: []
+      height: 110
+      id: '1726478004324'
+      position:
+        x: 599.9285186485399
+        y: 279
+      positionAbsolute:
+        x: 599.9285186485399
+        y: 279
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - type: text
+            value: ''
+          type: none
+        desc: ''
+        headers: ''
+        method: get
+        params: url:{{#1726477902803.url#}}
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 获取项目结构
+        type: http-request
+        url: http://XXXX:11163/get_structure
+        variables: []
+      height: 139
+      id: '1726478412443'
+      position:
+        x: 1106.767518807623
+        y: 279
+      positionAbsolute:
+        x: 1106.767518807623
+        y: 279
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1726478412443'
+          - body
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: /root/Qwen2.5-72B-Instruct-AWQ/
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - edition_type: basic
+          id: 64d5a35f-4c38-4f7c-ab6c-f7810fe73f8f
+          role: system
+          text: '基于以下信息，请提供一个简洁的GitHub项目总结：
+
+
+            项目URL: {{#1726477902803.url#}}
+
+            README内容：{{#1726478004324.body#}}
+
+
+            项目结构：{{#1726478412443.body#}}
+
+
+            请包含以下内容在您的总结中：
+
+            1. 项目的主要功能和目的
+
+            2. 使用的主要技术或编程语言
+
+            3. 项目的结构概览
+
+            4. 潜在的用途或应用场景
+
+            5. 任何值得注意的特点或创新点
+
+
+            请以清晰、简洁的中文呈现这些信息。'
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        title: 总结GitHub项目
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 119
+      id: '1726478514343'
+      position:
+        x: 1604.593016785433
+        y: 279
+      positionAbsolute:
+        x: 1604.593016785433
+        y: 279
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1726478514343'
+          - text
+          variable: text
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1726478601010'
+      position:
+        x: 2028.0594223396797
+        y: 279
+      positionAbsolute:
+        x: 2028.0594223396797
+        y: 279
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -11.750030627559
+      y: 4.26795018376481
+      zoom: 0.43527528164806223

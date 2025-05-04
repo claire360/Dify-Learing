@@ -1,0 +1,367 @@
+app:
+  description: 生成excel表
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: Excel_Flask_Dify
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai_api_compatible:0.0.11@410445eba2fa0f693d26dea2c3b9ffe51ad0777e021146ff877af6098412efc7
+kind: app
+version: 0.2.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1733911211555-source-1734586771596-target
+      selected: false
+      source: '1733911211555'
+      sourceHandle: source
+      target: '1734586771596'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: parameter-extractor
+      id: 1734586771596-source-1744122731516-target
+      source: '1734586771596'
+      sourceHandle: source
+      target: '1744122731516'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: parameter-extractor
+        targetType: template-transform
+      id: 1744122731516-source-1744123667976-target
+      source: '1744122731516'
+      sourceHandle: source
+      target: '1744123667976'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: http-request
+      id: 1744123667976-source-1734580476646-target
+      source: '1744123667976'
+      sourceHandle: source
+      target: '1734580476646'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: answer
+      id: 1734580476646-source-1744125227510-target
+      source: '1734580476646'
+      sourceHandle: source
+      target: '1744125227510'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: number
+          max_length: 48
+          options: []
+          required: true
+          type: number
+          variable: number
+      height: 90
+      id: '1733911211555'
+      position:
+        x: 354.311506858477
+        y: 201.97163681793995
+      positionAbsolute:
+        x: 354.311506858477
+        y: 201.97163681793995
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-421
+            key: ''
+            type: text
+            value: "{\n  \"fields\": [\"姓名\", \"年龄\", \"职业\", \"姓名A\", \"年龄A\", \"\
+              职业A\"],\n  \"values\": {{#1744123667976.output#}}\n}"
+          type: json
+        desc: ''
+        headers: Content-Type:application/json
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 2
+          retry_enabled: false
+          retry_interval: 100
+        selected: false
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 请求
+        type: http-request
+        url: http://36.133.8.143:11163/create_excel
+        variables: []
+      height: 110
+      id: '1734580476646'
+      position:
+        x: 1624.1019218318586
+        y: 255.9716368179399
+      positionAbsolute:
+        x: 1624.1019218318586
+        y: 255.9716368179399
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: /root/Qwen2.5-72B-Instruct-AWQ/
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: d3863d16-2329-4faf-a0c7-b425d40d0f57
+          role: system
+          text: '请根据以下描述生成一个包{{#1733911211555.number#}}个条目的JSON对象，每个条目有六个字段："姓名"、"年龄"、"职业"、"姓名A"、"年龄A"和"职业A"。具体要求如下：
+
+
+            - "姓名"字段应包含{{#1733911211555.number#}}个不同的中国名字。
+
+            - "年龄"字段应包含{{#1733911211555.number#}}个介于20到65之间的整数。
+
+            - "职业"字段应包含{{#1733911211555.number#}}个常见的职业名称，可以从以下列表中随机选择："工程师", "医生",
+            "教师", "律师", "设计师", "会计师", "程序员", "科学家", "艺术家", "作家"。
+
+            - "姓名A"字段应包含{{#1733911211555.number#}}个不同的中国名字。
+
+            - "年龄A"字段应包含{{#1733911211555.number#}}个介于20到65之间的整数。
+
+            - "职业A"字段应包含{{#1733911211555.number#}}个常见的职业名称，可以从以下列表中随机选择："工程师", "医生",
+            "教师", "律师", "设计师", "会计师", "程序员", "科学家", "艺术家", "作家"。
+
+
+
+            请确保生成的内容是一个单一的、有效的JSON对象，并按照以下格式组织：
+
+             
+
+            ```json
+
+            {
+
+            "姓名": ["张三", "李四", "王五", ...], // 5个不同的中国名字
+
+            "年龄": [23, 34, 45, ...], // 5个介于20到65之间的整数
+
+            "职业": ["工程师", "医生", "教师", ...],  // 5个常见的职业名称
+
+            "姓名A": ["张三", "李四", "王五", ...], // 5个不同的中国名字
+
+            "年龄A": [23, 34, 45, ...], // 5个介于20到65之间的整数
+
+            "职业A": ["工程师", "医生", "教师", ...] // 5个常见的职业名称
+
+            }'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1734586771596'
+      position:
+        x: 635.3195454248513
+        y: 201.97163681793995
+      positionAbsolute:
+        x: 635.3195454248513
+        y: 201.97163681793995
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        instruction: '{{#1734586771596.text#}}
+
+          请确保生成的内容是一个单一的、有效的JSON对象，并按照以下格式组织：
+
+           
+
+          ```json
+
+          {
+
+          "姓名": ["张三", "李四", "王五", ...], // 30个不同的中国名字
+
+          "年龄": [23, 34, 45, ...], // 30个介于20到65之间的整数
+
+          "职业": ["工程师", "医生", "教师", ...],  // 30个常见的职业名称
+
+          "姓名A": ["张三", "李四", "王五", ...], // 30个不同的中国名字
+
+          "年龄A": [23, 34, 45, ...], // 30个介于20到65之间的整数
+
+          "职业A": ["工程师", "医生", "教师", ...] // 30个常见的职业名称
+
+          }'
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: /root/Qwen2.5-72B-Instruct-AWQ/
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        parameters:
+        - description: LLM输出的JSON
+          name: LLMJSON
+          required: false
+          type: string
+        query:
+        - '1734586771596'
+        - text
+        reasoning_mode: prompt
+        selected: false
+        title: 参数提取器
+        type: parameter-extractor
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1744122731516'
+      position:
+        x: 932.1019218318593
+        y: 217.97163681793995
+      positionAbsolute:
+        x: 932.1019218318593
+        y: 217.97163681793995
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: '{{ arg1 }}'
+        title: 模板转换
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1744122731516'
+          - LLMJSON
+          variable: arg1
+      height: 54
+      id: '1744123667976'
+      position:
+        x: 1260.101921831859
+        y: 269.9716368179402
+      positionAbsolute:
+        x: 1260.101921831859
+        y: 269.9716368179402
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '下载链接
+
+          {{#1734580476646.body#}}'
+        desc: ''
+        selected: true
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 105
+      id: '1744125227510'
+      position:
+        x: 2008.101921831859
+        y: 239.9716368179399
+      positionAbsolute:
+        x: 2008.101921831859
+        y: 239.9716368179399
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -755.9509299522035
+      y: -7.380340011839024
+      zoom: 0.4536253942430486
